@@ -1,0 +1,31 @@
+pipeline { 
+    agent any
+
+    environment {
+        REPO_URL = 'https://github.com/ervaibhavmewara/stellar-ecom-site.git'
+        BRANCH = 'main'
+    }
+
+    stages {
+        stage("Checkout") {
+            steps {
+                git branch: "${BRANCH}",
+                    credentialsId: 'github-token',
+                    url: "${REPO_URL}"
+            }
+        }
+
+        stage("Build") {
+            steps {
+                sh "yarn install"
+                sh "yarn build"
+            }
+        }    
+
+        stage("Deploy") {
+            steps {
+                sh "pm2 restart app || pm2 start yarn --name app -- start -p 4040"
+            } 
+        }    
+    }
+}
