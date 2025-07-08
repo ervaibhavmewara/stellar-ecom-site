@@ -18,7 +18,8 @@ pipeline {
 
         stage("Deploy") {
             steps {
-                sh "pm2 restart app || pm2 start yarn --name app -- start -p 4040"
+                pm2 restart app || pm2 start yarn --interpreter none --name app -- start -p 4040
+
             } 
         }    
     }
