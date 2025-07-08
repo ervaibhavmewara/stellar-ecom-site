@@ -7,13 +7,7 @@ pipeline {
     }
 
     stages {
-        stage("Checkout") {
-            steps {
-                git branch: "${BRANCH}",
-                    credentialsId: 'github-token',
-                    url: "${REPO_URL}"
-            }
-        }
+       
 
         stage("Build") {
             steps {
